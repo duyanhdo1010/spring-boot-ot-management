@@ -15,12 +15,12 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/api/users")
+    @PostMapping("/api/v1/users")
     public User createUser(@RequestBody User user) {
         return userService.createUser(user);
     }
 
-    @PostMapping("/api/login")
+    @PostMapping("/auth/login")
     public String login(@RequestBody LoginRequest loginRequest) {
         return userService.login(loginRequest);
     }
