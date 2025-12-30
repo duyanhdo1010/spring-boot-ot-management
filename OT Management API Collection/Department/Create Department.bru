@@ -1,0 +1,26 @@
+meta {
+  name: Create Department
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{url}}/departments/
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGdtYWlsLmNvbSIsImlhdCI6MTc2NzA4MjYxNywiZXhwIjoxNzY3MTY5MDE3fQ.HF8tjGSOxHmV61OxSGN6lnek4SQYP27TWyPuSe-OQRY
+}
+
+body:json {
+  {
+      "name": "Phòng Marketing"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
