@@ -2,12 +2,13 @@ package com.spring.otmanagement.controller;
 
 import com.spring.otmanagement.dto.LoginRequest;
 import com.spring.otmanagement.dto.UserCreationRequest;
+import com.spring.otmanagement.dto.UserResponse;
+import com.spring.otmanagement.dto.UserUpdateRequest;
 import com.spring.otmanagement.entity.User;
 import com.spring.otmanagement.service.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,13 +21,24 @@ public class UserController {
     }
 
     @PostMapping("/auth/register")
-    public User createUser(@RequestBody UserCreationRequest user) {
+    public UserResponse createUser(@RequestBody @Validated UserCreationRequest user) {
         return userService.createUser(user);
     }
 
     @GetMapping("/api/v1/users")
-    public List<User> getAllUsers() {
+    public List<UserResponse> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @PatchMapping("/api/v1/users/{id}")
+    public UserResponse updateUser(@PathVariable Long id, @Validated @RequestBody UserUpdateRequest user) {
+        return this.userService.updateUser(id, user);
+    }
+
+    @DeleteMapping("/api/v1/users/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable Long id) {
+        this.userService.deleteUser(id);
     }
 
     @PostMapping("/auth/login")

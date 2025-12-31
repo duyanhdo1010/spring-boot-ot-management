@@ -2,8 +2,11 @@ package com.spring.otmanagement.service;
 
 import com.spring.otmanagement.dto.LoginRequest;
 import com.spring.otmanagement.dto.UserCreationRequest;
+import com.spring.otmanagement.dto.UserResponse;
+import com.spring.otmanagement.dto.UserUpdateRequest;
 import com.spring.otmanagement.entity.Department;
 import com.spring.otmanagement.entity.User;
+import com.spring.otmanagement.exception.AppException;
 import com.spring.otmanagement.repository.DepartmentRepository;
 import com.spring.otmanagement.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,18 +29,45 @@ public class UserService {
         this.jwtService = jwtService;
     }
 
-    public User createUser(UserCreationRequest user) {
+    public UserResponse createUser(UserCreationRequest user) {
         User newUser = new User();
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        Department userDepartment = departmentRepository.findById(user.getDepartmentId()).orElseThrow(() -> new RuntimeException("Department không tồn tại"));
+        Department userDepartment = departmentRepository.findById(user.getDepartmentId())
+                .orElseThrow(() -> new AppException(404, "Department not found", "Department không tồn tại"));
         newUser.setDepartment(userDepartment);
         newUser.setEmail(user.getEmail());
         newUser.setName(user.getName());
-        return this.userRepository.save(newUser);
+        return new UserResponse(this.userRepository.save(newUser));
     }
 
-    public List<User> getAllUsers() {
-        return this.userRepository.findAll();
+    public List<UserResponse> getAllUsers() {
+        return this.userRepository.findAll().stream().map(user -> new UserResponse(user)).toList();
+    }
+
+    public UserResponse updateUser(Long id, UserUpdateRequest user) {
+        User updatedUser = this.userRepository.findById(id)
+                .orElseThrow(() -> new AppException(404, "User not found", "User không tồn tại"));
+        if (user.getName() != null) {
+            updatedUser.setName(user.getName());
+        }
+
+        if (user.getDepartmentId() != null) {
+            Department userDepartment = departmentRepository.findById(user.getDepartmentId())
+                    .orElseThrow(() -> new AppException(404, "Department not found", "Department không tồn tại"));
+            updatedUser.setDepartment(userDepartment);
+        }
+
+        if (user.getPassword() != null) {
+            updatedUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        return new UserResponse(this.userRepository.save(updatedUser));
+    }
+
+    public void deleteUser(Long id) {
+        if (!this.userRepository.existsById(id)) {
+            throw new AppException(404, "User not found", "User không tồn tại");
+        }
+        this.userRepository.deleteById(id);
     }
 
     public String login(LoginRequest request) {

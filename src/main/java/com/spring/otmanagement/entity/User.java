@@ -1,5 +1,6 @@
 package com.spring.otmanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,7 +22,8 @@ public class User implements UserDetails {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column
+    @Column(name = "password")
+    @JsonIgnore
     private String password;
 
     @ManyToOne
