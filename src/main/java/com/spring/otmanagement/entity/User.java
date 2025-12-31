@@ -30,6 +30,9 @@ public class User implements UserDetails {
     @JoinColumn(name = "department_id")
     private Department department;
 
+    @OneToMany(mappedBy = "manager")
+    private List<Project> projects;
+
     public User() {}
 
     public Long getId() {
@@ -88,6 +91,14 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
     }
 
     public void setPassword(String password) {

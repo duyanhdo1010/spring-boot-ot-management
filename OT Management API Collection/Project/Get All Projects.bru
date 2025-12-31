@@ -1,0 +1,20 @@
+meta {
+  name: Get All Projects
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{url}}/api/v1/projects
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYW5hZ2VyQGdtYWlsLmNvbSIsImlhdCI6MTc2NzE3MjMzOCwiZXhwIjoxNzY3MjU4NzM4fQ.j6KUMG3lFZJdgM6lzPgHeqJPSN5qZIpEAP7SGPQXPaM
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
