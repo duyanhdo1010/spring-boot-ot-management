@@ -1,0 +1,30 @@
+meta {
+  name: OT Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{url}}/api/v1/otregistration
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYW5hZ2VyQGdtYWlsLmNvbSIsImlhdCI6MTc2NzM0MzI1MCwiZXhwIjoxNzY3NDI5NjUwfQ.7gxVaufJK0jSIXOZLYLvBgxy1BV5L2lZ8gMUWOcLtZs
+}
+
+body:json {
+  {
+    "startTime": "2024-01-15T18:00:00",
+    "endTime": "2024-01-15T20:30:00",
+    "reason": "Fix bug gấp cho dự án X",
+    "project_id": 1,
+    "manager_id": 8
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -12,6 +12,18 @@ public class Department {
     @Column
     private String name;
 
+    @OneToOne
+    @JoinColumn(name = "manager_id", referencedColumnName = "id")
+    private User manager;
+
+    public User getManager() {
+        return manager;
+    }
+
+    public void setManager(User manager) {
+        this.manager = manager;
+    }
+
     public Department() {}
 
     public Long getId() {
