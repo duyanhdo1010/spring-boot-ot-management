@@ -1,0 +1,31 @@
+meta {
+  name: Login (Manager)
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{url}}/auth/login
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email": "manager@gmail.com",
+    "password": "password123"
+  }
+}
+
+script:post-response {
+  const body = res.getBody();
+  
+  if (body.accessToken) {
+      bru.setEnvVar("access_token", body.accessToken);
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

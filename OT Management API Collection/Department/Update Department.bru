@@ -1,0 +1,15 @@
+meta {
+  name: Update Department
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{url}}/departments
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

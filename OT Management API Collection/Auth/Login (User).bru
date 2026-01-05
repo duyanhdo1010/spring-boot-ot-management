@@ -1,5 +1,5 @@
 meta {
-  name: Login
+  name: Login (User)
   type: http
   seq: 1
 }
@@ -12,8 +12,16 @@ post {
 
 body:json {
   {
-    "email": "manager@gmail.com",
+    "email": "test@gmail.com",
     "password": "password123"
+  }
+}
+
+script:post-response {
+  const body = res.getBody();
+  
+  if (body.accessToken) {
+      bru.setEnvVar("access_token", body.accessToken);
   }
 }
 

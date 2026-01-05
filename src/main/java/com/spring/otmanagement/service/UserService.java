@@ -1,9 +1,6 @@
 package com.spring.otmanagement.service;
 
-import com.spring.otmanagement.dto.LoginRequest;
-import com.spring.otmanagement.dto.UserCreationRequest;
-import com.spring.otmanagement.dto.UserResponse;
-import com.spring.otmanagement.dto.UserUpdateRequest;
+import com.spring.otmanagement.dto.*;
 import com.spring.otmanagement.entity.Department;
 import com.spring.otmanagement.entity.User;
 import com.spring.otmanagement.exception.AppException;
@@ -70,7 +67,7 @@ public class UserService {
         this.userRepository.deleteById(id);
     }
 
-    public String login(LoginRequest request) {
+    public AuthResponse login(LoginRequest request) {
         Optional<User> userOptional = userRepository.findByEmail(request.getEmail());
 
         if (userOptional.isEmpty()) {
@@ -83,6 +80,9 @@ public class UserService {
             throw new RuntimeException("Email hoặc mật khẩu không chính xác");
         }
 
-        return jwtService.generateToken(user.getEmail());
+        String access_token = jwtService.generateToken(user.getEmail());
+        AuthResponse authResponse = new AuthResponse();
+        authResponse.setAccessToken(access_token);
+        return authResponse;
     }
 }

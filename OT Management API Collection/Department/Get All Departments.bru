@@ -1,24 +1,17 @@
 meta {
-  name: Create Department
+  name: Get All Departments
   type: http
-  seq: 1
+  seq: 2
 }
 
-post {
+get {
   url: {{url}}/departments/
-  body: json
+  body: none
   auth: bearer
 }
 
 auth:bearer {
   token: {{access_token}}
-}
-
-body:json {
-  {
-    "name": "Phòng 3",
-    "manager_id": 8
-  }
 }
 
 settings {

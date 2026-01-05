@@ -1,6 +1,7 @@
 package com.spring.otmanagement.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,6 +29,7 @@ public class User implements UserDetails {
 
     @ManyToOne
     @JoinColumn(name = "department_id")
+    @JsonIgnoreProperties("manager")
     private Department department;
 
     @OneToMany(mappedBy = "manager")

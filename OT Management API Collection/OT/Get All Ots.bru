@@ -1,11 +1,11 @@
 meta {
-  name: Delete Project
+  name: Get All Ots
   type: http
-  seq: 3
+  seq: 4
 }
 
-delete {
-  url: localhost:8080/api/v1/projects/9999
+get {
+  url: {{url}}/api/v1/otregistrations
   body: none
   auth: bearer
 }

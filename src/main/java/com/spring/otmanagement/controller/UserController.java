@@ -1,9 +1,6 @@
 package com.spring.otmanagement.controller;
 
-import com.spring.otmanagement.dto.LoginRequest;
-import com.spring.otmanagement.dto.UserCreationRequest;
-import com.spring.otmanagement.dto.UserResponse;
-import com.spring.otmanagement.dto.UserUpdateRequest;
+import com.spring.otmanagement.dto.*;
 import com.spring.otmanagement.entity.User;
 import com.spring.otmanagement.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -42,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping("/auth/login")
-    public String login(@RequestBody LoginRequest loginRequest) {
+    public AuthResponse login(@RequestBody LoginRequest loginRequest) {
         return userService.login(loginRequest);
     }
 }

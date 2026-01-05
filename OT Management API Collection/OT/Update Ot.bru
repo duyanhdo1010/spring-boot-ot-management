@@ -1,0 +1,30 @@
+meta {
+  name: Update Ot
+  type: http
+  seq: 6
+}
+
+patch {
+  url: {{url}}/api/v1/otregistrations/5
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "startTime": "2023-10-27T19:00:00",
+    "endTime": "2023-10-27T21:00:00",
+    "reason": "Cập nhật: Fix bug gấp cho dự án X (Đã đổi giờ)",
+    "project_id": 1,
+    "manager_id": 8
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
