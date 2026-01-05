@@ -23,6 +23,17 @@ public class OtRegistration {
     @Column(columnDefinition = "TEXT")
     private String reason;
 
+    @Column(columnDefinition = "TEXT", name = "manager_note")
+    private String managerNote;
+
+    public String getManagerNote() {
+        return managerNote;
+    }
+
+    public void setManagerNote(String managerNote) {
+        this.managerNote = managerNote;
+    }
+
     @Enumerated(EnumType.STRING)
     private OtStatus status;
 

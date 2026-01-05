@@ -8,4 +8,5 @@ import java.util.List;
 public interface OtRegistrationRepository extends JpaRepository<OtRegistration, Long> {
     List<OtRegistration> findByEmployee_Id(Long id);
     List<OtRegistration> findByManager_Id(Long id);
+    List<OtRegistration> findByEmployee_IdOrManager_Id(Long employeeId, Long managerId);
 }
