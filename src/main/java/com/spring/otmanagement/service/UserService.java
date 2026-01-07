@@ -8,11 +8,13 @@ import com.spring.otmanagement.repository.DepartmentRepository;
 import com.spring.otmanagement.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class UserService {
     private final UserRepository userRepository;
     private final DepartmentRepository departmentRepository;
@@ -37,8 +39,9 @@ public class UserService {
         return new UserResponse(this.userRepository.save(newUser));
     }
 
+    @Transactional(readOnly = true)
     public List<UserResponse> getAllUsers() {
-        return this.userRepository.findAll().stream().map(user -> new UserResponse(user)).toList();
+        return this.userRepository.findByIsDeletedFalse().stream().map(user -> new UserResponse(user)).toList();
     }
 
     public UserResponse updateUser(Long id, UserUpdateRequest user) {
@@ -61,10 +64,9 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
-        if (!this.userRepository.existsById(id)) {
-            throw new AppException(404, "User not found", "User không tồn tại");
-        }
-        this.userRepository.deleteById(id);
+        User user = userRepository.findById(id).orElseThrow(() -> new AppException(404, "User not found", "User không tồn tại"));
+        user.setDeleted(true);
+        this.userRepository.save(user);
     }
 
     public AuthResponse login(LoginRequest request) {
@@ -75,6 +77,10 @@ public class UserService {
         }
 
         User user = userOptional.get();
+
+        if (user.isDeleted()) {
+            throw new AppException(403, "Login Error", "Tài khoản của bạn đã bị xoá");
+        }
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Email hoặc mật khẩu không chính xác");

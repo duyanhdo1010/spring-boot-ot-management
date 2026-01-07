@@ -29,7 +29,7 @@ public class Department {
         this.manager = manager;
     }
 
-    @OneToMany(mappedBy = "department", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "department")
     @JsonIgnoreProperties("department")
     @JsonIgnore
     private List<User> employees;

@@ -8,10 +8,12 @@ import com.spring.otmanagement.exception.AppException;
 import com.spring.otmanagement.repository.ProjectRepository;
 import com.spring.otmanagement.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class ProjectService {
     private final UserRepository userRepository;
     private final ProjectRepository projectRepository;
@@ -30,6 +32,7 @@ public class ProjectService {
         return this.projectRepository.save(newProject);
     }
 
+    @Transactional(readOnly = true)
     public List<Project> getAllProjects() {
         return this.projectRepository.findAll();
     }

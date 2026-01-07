@@ -13,11 +13,13 @@ import com.spring.otmanagement.repository.ProjectRepository;
 import com.spring.otmanagement.repository.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.util.List;
 
 @Service
+@Transactional
 public class OtRegistrationService {
     private final OtRegistrationRepository otRegistrationRepository;
     private final UserRepository userRepository;
@@ -99,6 +101,7 @@ public class OtRegistrationService {
         return this.mapToResponse(savedOt);
     }
 
+    @Transactional(readOnly = true)
     public List<OtRegistrationResponse> getAllOtRegistrations() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User employee = userRepository.findByEmail(email)
@@ -106,6 +109,7 @@ public class OtRegistrationService {
         return this.otRegistrationRepository.findByEmployee_IdOrManager_Id(employee.getId(), employee.getId()).stream().map(ot -> this.mapToResponse(ot)).toList();
     }
 
+    @Transactional(readOnly = true)
     public OtRegistrationResponse getOtRegistration(Long id) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User employee = userRepository.findByEmail(email)

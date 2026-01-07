@@ -35,13 +35,23 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "manager")
     private List<Project> projects;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "employee")
     private List<OtRegistration> employeeOtRegistrations;
 
-    @OneToMany(mappedBy = "manager", cascade = CascadeType.REMOVE, orphanRemoval = true)  
+    @OneToMany(mappedBy = "manager")
     private List<OtRegistration> managerOtRegistrations;
 
+    private boolean isDeleted = false;
+
     public User() {}
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
 
     public Long getId() {
         return id;

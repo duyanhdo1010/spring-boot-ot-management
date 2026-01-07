@@ -1,5 +1,6 @@
 package com.spring.otmanagement.controller;
 
+import com.spring.otmanagement.dto.DepartmentCreationRequest;
 import com.spring.otmanagement.dto.DepartmentUpdateRequest;
 import com.spring.otmanagement.dto.DepartmentUpdateResponse;
 import com.spring.otmanagement.entity.Department;
@@ -18,7 +19,7 @@ public class DepartmentController {
     }
 
     @PostMapping("/")
-    public Department createDepartment(@RequestBody Department department) {
+    public Department createDepartment(@RequestBody DepartmentCreationRequest department) {
         return this.departmentService.createDepartment(department);
     }
 
