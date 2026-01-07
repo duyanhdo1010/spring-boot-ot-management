@@ -1,5 +1,7 @@
 package com.spring.otmanagement.controller;
 
+import com.spring.otmanagement.dto.DepartmentUpdateRequest;
+import com.spring.otmanagement.dto.DepartmentUpdateResponse;
 import com.spring.otmanagement.entity.Department;
 import com.spring.otmanagement.service.DepartmentService;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +28,7 @@ public class DepartmentController {
     }
 
     @PatchMapping("/{id}")
-    public Department updateDepartment(@PathVariable Long id, @RequestBody Department department) {
+    public DepartmentUpdateResponse updateDepartment(@PathVariable Long id, @RequestBody DepartmentUpdateRequest department) {
         return this.departmentService.updateDepartment(id, department);
     }
 

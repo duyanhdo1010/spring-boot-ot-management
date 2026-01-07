@@ -1,5 +1,6 @@
 package com.spring.otmanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -30,6 +31,7 @@ public class Department {
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonIgnoreProperties("department")
+    @JsonIgnore
     private List<User> employees;
 
     public List<User> getEmployees() {

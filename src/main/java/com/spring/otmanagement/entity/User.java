@@ -35,6 +35,12 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "manager")
     private List<Project> projects;
 
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<OtRegistration> employeeOtRegistrations;
+
+    @OneToMany(mappedBy = "manager", cascade = CascadeType.REMOVE, orphanRemoval = true)  
+    private List<OtRegistration> managerOtRegistrations;
+
     public User() {}
 
     public Long getId() {

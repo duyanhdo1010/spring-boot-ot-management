@@ -5,11 +5,23 @@ meta {
 }
 
 patch {
-  url: {{url}}/departments
-  body: none
-  auth: inherit
+  url: {{url}}/departments/3
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "name": "Phòng 2 Update",
+    "manager_id": 2
+  }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
